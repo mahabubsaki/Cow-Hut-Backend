@@ -11,10 +11,12 @@ import handleZodError from "./handleZodError";
 const globalErrorHandler: ErrorRequestHandler = (err: ApiError, _: Request, res: Response, next: NextFunction) => {
     let reponse: IApiResponse<null> = {
         success: false,
-        message: "Something went wrong",
-        statusCode: parseInt(httpStatus[500]),
+        message: err?.message || "Something went wrong",
+        statusCode: err.statusCode || 500,
+        stack: err.stack,
+        errorMessages: [{ message: err?.message || "Something went wrong", path: "unknown" }]
     };
-    console.log(err);
+    console.log({ err });
     if (err?.name === 'ValidationError' && err instanceof Error.ValidationError) {
         const simplifiedError = handleValidationError(err);
         reponse = { ...simplifiedError };
