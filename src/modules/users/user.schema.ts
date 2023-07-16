@@ -103,4 +103,9 @@ export const UserZodSchema = z.object({
         invalid_type_error: "Income must be number",
         required_error: "Income is required"
     })
+}).refine(schema => {
+    return !((schema.role === 'buyer' && schema.income > 0) || (schema.role === 'seller' && schema.budget > 0));
+}, {
+    message: "Buyers wont't have any income and sellers won't have any budget",
+    path: ["role", "budget", "income"]
 });
