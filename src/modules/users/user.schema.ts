@@ -1,12 +1,21 @@
 import { Schema } from "mongoose";
 import { z } from 'zod';
+import httpStatus from 'http-status';
 
 import { IUser, IUserMethods, IUserStatics } from "./user.interface";
+import { ApiError } from "../../shared/ApiError";
 
 export const UserMongooseSchema = new Schema<IUser, IUserStatics, IUserMethods>(
     {
-        password: { type: String, required: true },
-        role: { type: String, required: true, enum: ["buyer", "seller"] },
+        password: {
+            type: String,
+            required: true
+        },
+        role: {
+            type: String,
+            required: true,
+            enum: ["buyer", "seller"]
+        },
         name: {
             firstName: {
                 type: String,
@@ -20,17 +29,41 @@ export const UserMongooseSchema = new Schema<IUser, IUserStatics, IUserMethods>(
                 type: String
             }
         },
-        phoneNumber: { type: String, required: true },
-        address: { type: String, required: true },
-        budget: { type: Number, required: true },
-        income: { type: Number, required: true },
+        phoneNumber: {
+            type: String,
+            required: true
+        },
+        address: {
+            type: String,
+            required: true
+        },
+        budget: {
+            type: Number,
+            required: true
+        },
+        income: {
+            type: Number,
+            required: true
+        },
     },
     {
-        timestamps: true, toJSON: {
+        timestamps: true,
+        toJSON: {
             virtuals: true
         }
     }
 );
+
+
+UserMongooseSchema.pre('save', async function (next) {
+    if (this.role === 'buyer' && this.income > 0) {
+        throw new ApiError(httpStatus.BAD_REQUEST, "Buyers won't have any income");
+    }
+    if (this.role === 'seller' && this.budget > 0) {
+        throw new ApiError(httpStatus.BAD_REQUEST, "Sellers won't have any budget");
+    }
+    next();
+});
 
 export const UserZodSchema = z.object({
     password: z.string({
