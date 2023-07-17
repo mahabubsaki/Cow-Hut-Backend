@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
-import { getAllUsers, signUp } from "./user.service";
+import { getAllUsers, getSingleUser, signUp } from "./user.service";
 import { IUser } from "./user.interface";
 import sendResponse from "../../shared/sendResponse";
 import httpStatus from "http-status";
@@ -27,7 +27,15 @@ export const getAllUsersController = catchAsync(async (req: Request, res: Respon
 });
 
 export const getSingleUserController = catchAsync(async (req: Request, res: Response) => {
-
+    const id = req.params.id;
+    const result = await getSingleUser(id);
+    sendResponse<IUser | null>(res, {
+        message: result ? `User retrieved successfully with id ${id}` : `No user found with id ${id}`,
+        statusCode: result ? httpStatus.OK : httpStatus.BAD_REQUEST,
+        success: result ? true : false,
+        data: result ? result : null,
+        errorMessages: !result ? [{ message: `No user found with id ${id}`, path: "" }] : null
+    });
 });
 
 
