@@ -14,3 +14,8 @@ export const getSingleUser = async (id: string): Promise<IUser | null> => {
     const result = await User.findById(id);
     return result;
 };
+
+export const deleteUser = async (id: string) => {
+    const result = await User.findByIdAndDelete(id);
+    return result;
+};
