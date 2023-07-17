@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
-import { signUp } from "./user.service";
+import { getAllUsers, signUp } from "./user.service";
 import { IUser } from "./user.interface";
 import sendResponse from "../../shared/sendResponse";
 import httpStatus from "http-status";
@@ -17,7 +17,13 @@ export const signUpController = catchAsync(async (req: Request, res: Response) =
 });
 
 export const getAllUsersController = catchAsync(async (req: Request, res: Response) => {
-
+    const result = await getAllUsers();
+    sendResponse<IUser[]>(res, {
+        message: "Users retrieved successfully",
+        statusCode: httpStatus.OK,
+        success: true,
+        data: result,
+    });
 });
 
 export const getSingleUserController = catchAsync(async (req: Request, res: Response) => {
