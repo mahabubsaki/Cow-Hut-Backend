@@ -1,6 +1,6 @@
 import { Response } from "express";
 interface ErrorMessages {
-    path: string,
+    path: string | number,
     message: string;
 }
 export interface IApiResponse<T> {
