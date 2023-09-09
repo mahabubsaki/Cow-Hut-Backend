@@ -1,7 +1,8 @@
 import { Schema } from "mongoose";
 import { z } from "zod";
+import { ICow, ICowMethods, ICowStatics } from "./cow.interface";
 
-export const CowMongooseSchema = new Schema(
+export const CowMongooseSchema = new Schema<ICow, ICowStatics, ICowMethods>(
     {
         name: {
             type: String,
