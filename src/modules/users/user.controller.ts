@@ -16,7 +16,7 @@ export const userSignUpController = catchAsync(async (req: Request, res: Respons
     });
 });
 
-export const getAllUsersController = catchAsync(async (req: Request, res: Response) => {
+export const getAllUsersController = catchAsync(async (_: Request, res: Response) => {
     const result = await getAllUsers();
     sendResponse<IUser[]>(res, {
         message: "Users retrieved successfully",
