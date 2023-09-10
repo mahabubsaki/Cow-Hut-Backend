@@ -29,8 +29,12 @@ export const validateUpdatedCow: RequestHandler = async (req, _, next): Promise<
 export const validateSellerId: RequestHandler = async (req, _, next): Promise<void> => {
     try {
         const seller = await User.findById(req.body.seller);
+
         if (!seller) {
-            throw new ApiError(httpStatus.BAD_REQUEST, "No seller found with the given id");
+            throw new ApiError(httpStatus.BAD_REQUEST, "No User found with the given id");
+        }
+        if (seller.role !== 'seller') {
+            throw new ApiError(httpStatus.BAD_REQUEST, "Only Sellers can add cows to the hut");
         }
         next();
     }

@@ -4,6 +4,8 @@ import sendResponse from "../../shared/sendResponse";
 import httpStatus from "http-status";
 import { ICow } from "./cow.interface";
 import { cowSignUp, deleteCow, getAllCows, getSingleCow, updateCow } from "./cow.service";
+import { ICowFilterOptions, ICowPaginationOptions } from "./cow.query";
+import pick from "../../utilities/pick";
 
 export const cowSignUpController = catchAsync(async (req: Request, res: Response) => {
     const userData: ICow = req.body;
@@ -17,12 +19,16 @@ export const cowSignUpController = catchAsync(async (req: Request, res: Response
 });
 
 export const getAllCowsController = catchAsync(async (req: Request, res: Response) => {
-    const result = await getAllCows();
+
+    const paginationOptions: ICowPaginationOptions = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
+    const filterOptions: ICowFilterOptions = pick(req.query, ['query', 'minPrice', 'maxPrice', 'location', 'category', 'breed', 'name', 'label']);
+    const { data: result, meta } = await getAllCows(paginationOptions, filterOptions);
     sendResponse<ICow[]>(res, {
         message: "Cows retrieved successfully",
         statusCode: httpStatus.OK,
         success: true,
         data: result,
+        meta
     });
 });
 

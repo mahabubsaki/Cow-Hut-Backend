@@ -8,6 +8,7 @@ export interface IApiResponse<T> {
     success: boolean,
     message: string;
     data?: T | null;
+    meta?: { page: number, limit: number, count: number; };
     errorMessages?: ErrorMessages[] | null;
     stack?: string | null;
 }
@@ -19,6 +20,7 @@ const sendResponse = <T>(res: Response, data: IApiResponse<T>): void => {
         statusCode: data.statusCode,
         success: data.success,
         message: data.message,
+        meta: data.meta,
         data: null,
         errorMessages: null,
         stack: null
@@ -31,6 +33,9 @@ const sendResponse = <T>(res: Response, data: IApiResponse<T>): void => {
         responseData.data = data.data;
         delete responseData.errorMessages;
         delete responseData.stack;
+    }
+    if (!data.meta) {
+        delete data.meta;
     }
 
     res.status(data.statusCode).json(responseData);
