@@ -1,6 +1,9 @@
 import { Schema } from "mongoose";
 import { z } from "zod";
 import { ICow, ICowMethods, ICowStatics } from "./cow.interface";
+import { Types } from "mongoose";
+import { ApiError } from "../../shared/ApiError";
+import httpStatus from "http-status";
 
 export const CowMongooseSchema = new Schema<ICow, ICowStatics, ICowMethods>(
     {
@@ -62,6 +65,10 @@ export const CowMongooseSchema = new Schema<ICow, ICowStatics, ICowMethods>(
         },
     }
 );
+
+
+
+
 
 
 export const CowZodSchmea = z.object({

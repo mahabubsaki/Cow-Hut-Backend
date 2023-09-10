@@ -1,8 +1,7 @@
 import { IUser } from "./user.interface";
 import { User } from "./user.model";
-import { extractNestedObject } from "./user.utils";
 
-export const signUp = async (payload: IUser): Promise<IUser> => {
+export const userSignUp = async (payload: IUser): Promise<IUser> => {
     const result = await User.create(payload);
     return result;
 };

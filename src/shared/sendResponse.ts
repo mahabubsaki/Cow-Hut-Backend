@@ -23,7 +23,6 @@ const sendResponse = <T>(res: Response, data: IApiResponse<T>): void => {
         errorMessages: null,
         stack: null
     };
-
     if (data.errorMessages && data.errorMessages.length > 0) {
         responseData.errorMessages = data.errorMessages;
         responseData.stack = data.stack;
