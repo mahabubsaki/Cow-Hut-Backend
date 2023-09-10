@@ -1,7 +1,6 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { ApiError } from "../shared/ApiError";
 import sendResponse, { IApiResponse } from "../shared/sendResponse";
-import httpStatus from "http-status";
 import { Error } from "mongoose";
 import { ZodError } from "zod";
 import handleValidationError from "./handleValidationError";

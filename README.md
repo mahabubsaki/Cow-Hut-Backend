@@ -6,17 +6,17 @@
 
 - api/v1/auth/signup (POST)
 - api/v1/users (GET)
-- api/v1/users/64b4ccb59097e27093f2366f (Single GET)
-- api/v1/users/64b4ccb59097e27093f2366f (PATCH)
-- api/v1/users/64b4ccb59097e27093f2366f (DELETE)
+- api/v1/users/64fd10cff5581e10aaa2135f (Single GET)
+- api/v1/users/64fd10cff5581e10aaa2135f (PATCH)
+- api/v1/users/64fd10cff5581e10aaa2135f (DELETE)
 
 #### Cows
 
 - api/v1/cows (POST)
 - api/v1/cows (GET)
-- api/v1/cows/<id>
-- api/v1/cows/<id>
-- api/v1/cows/<id>
+- api/v1/cows/64fd5dbaff646d15a9c66847 (Single GET)
+- api/v1/cows/64fd5dbaff646d15a9c66847 (PATCH)
+- api/v1/cows/64fd5dbaff646d15a9c66847 (DELETE)
 
 ### Pagination and Filtering routes of Cows
 
@@ -24,7 +24,7 @@
 - api/v1/cows?sortBy=price&sortOrder=asc
 - api/v1/cows?minPrice=20000&maxPrice=70000
 - api/v1/cows?location=Chattogram
-- api/v1/cows?searchTerm=Cha
+- api/v1/cows?query=Brahman
 
 #### Orders
 
